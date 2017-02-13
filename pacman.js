@@ -1,6 +1,7 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
+var powerPellets = 4;
 
 
 // Define your ghosts here
@@ -13,7 +14,7 @@ var inky = {
   edible: false
 };
 
-var bliinky = {
+var blinky = {
   menu_option: '2',
   name: 'Blinky',
   colour: 'Cyan',
@@ -37,6 +38,8 @@ var clyde = {
   edible: false
 };
 
+var ghosts = [inky, blinky, pinky, clyde]
+
 // Draw the screen functionality
 function drawScreen() {
   clearScreen();
@@ -58,6 +61,10 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  console.log('(1) Eat Inky');
+  console.log('(2) Eat Blinky');
+  console.log('(3) Eat Pinky');
+  console.log('(4) Eat Clyde');
   console.log('(q) Quit');
 }
 
@@ -65,7 +72,20 @@ function displayPrompt() {
   // process.stdout.write is similar to console.log except it doesn't add a new line after the text
   process.stdout.write('\nWaka Waka :v '); // :v is the Pac-Man emoji.
 }
+// Function to eat inedible ghosts
+function eatGhost(selection) {
+  if (ghosts[selection-1].edible === false) {
+    lives --;
+    console.log(ghosts[selection-1].name + " just ate you!");
+    gameOver();
+  }
+}
 
+function gameOver() {
+ if (lives === 0) {
+   process.exit();
+ }
+}
 
 // Menu Options
 function eatDot() {
@@ -80,6 +100,9 @@ function processInput(key) {
     case '\u0003': // This makes it so CTRL-C will quit the program
     case 'q':
       process.exit();
+      break;
+    case '1':
+      eatGhost(1);
       break;
     case 'd':
       eatDot();
