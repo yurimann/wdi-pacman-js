@@ -4,6 +4,7 @@ var lives = 2;
 var powerPellets = 4;
 var dotsLeft = 240;
 var level = 1
+var ghostsRemaining = 4;
 var bonus_points = false;
 
 
@@ -180,19 +181,22 @@ function eatGhost(selection) {
 }
 
 function eatPowerPellet() {
-  if (ghostsRemaining < 4){
-    console.log("Eat all the ghosts first!")
-  }
-  else{
-    ghosts.forEach(function(ghost){
+  ghosts.forEach(function(ghost){
+    if (ghost.edible === true){
+      console.log("Eat all the ghosts first!");
+  
+    }
+
+    else{
     ghost.edible = true;
+    }
   });
   powerPellets --;
   ghostsRemaining = 4
   score += 50;
   levelChecker();
   }
-}
+
 
 //BONUS POINTS
 function bonusSelector(level){
